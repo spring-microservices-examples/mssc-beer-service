@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.UUID;
 
@@ -25,10 +24,12 @@ class BeerControllerTest {
 
     @Autowired
     ObjectMapper objectMapper;
+
     @Test
     void getBeerById() throws Exception {
-        mockMvc.perform(get("/api/v1/beer/" + UUID.randomUUID().toString()).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        mockMvc.perform(get("/api/v1/beer/" + UUID.randomUUID().toString())
+                    .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk());
     }
 
     @Test
@@ -50,6 +51,13 @@ class BeerControllerTest {
         mockMvc.perform(put("/api/v1/beer/" + UUID.randomUUID().toString())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(beerDtoJson))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void deleteBeerById()  throws Exception{
+        mockMvc.perform(delete("/api/v1/beer/" + UUID.randomUUID().toString())
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
 }

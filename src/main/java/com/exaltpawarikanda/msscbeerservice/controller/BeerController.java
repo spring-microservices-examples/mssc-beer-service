@@ -22,10 +22,10 @@ public class BeerController {
     }
 
     @PostMapping
-    public ResponseEntity createBeer(@RequestBody BeerDto beerDto){
+    public ResponseEntity createBeer( BeerDto beerDto){
 
         //todo impl
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{beerId}")
@@ -33,6 +33,13 @@ public class BeerController {
 
         //todo impl
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/{beerId}")
+    public ResponseEntity deleteBeerById(@PathVariable("beerId") UUID beerId){
+
+        //todo impl
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 
