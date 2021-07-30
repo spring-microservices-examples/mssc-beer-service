@@ -28,9 +28,9 @@ public class BeerDto {
     @Null
     private Long version;
     @Null
-    private OffsetDateTime createdDate;
+    private OffsetDateTime createdAt;
     @Null
-    private OffsetDateTime lastModifiedDate;
+    private OffsetDateTime lastUpdatedAt;
 
     @NotBlank
     private String beerName;

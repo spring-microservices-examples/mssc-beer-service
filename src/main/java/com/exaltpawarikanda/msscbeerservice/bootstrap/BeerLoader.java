@@ -29,7 +29,7 @@ public class BeerLoader implements CommandLineRunner {
         if(beerRepository.count() == 0){
            beerRepository.save(Beer.builder()
                    .beerName("Amarula")
-                   .beerStyle(BeerStyle.GOSE)
+                   .beerStyle("GOSE")
                    .quantityToBrew(200)
                    .minOnHand(12)
                    .upc(61397311111L)
@@ -38,7 +38,7 @@ public class BeerLoader implements CommandLineRunner {
 
             beerRepository.save(Beer.builder()
                     .beerName("Galaxy Cat")
-                    .beerStyle(BeerStyle.ALE)
+                    .beerStyle("ALE")
                     .quantityToBrew(200)
                     .minOnHand(12)
                     .upc(61397313311L)
@@ -47,7 +47,7 @@ public class BeerLoader implements CommandLineRunner {
 
             beerRepository.save(Beer.builder()
                     .beerName("Castle")
-                    .beerStyle(BeerStyle.LAGER)
+                    .beerStyle("LAGER")
                     .quantityToBrew(200)
                     .minOnHand(12)
                     .upc(613973343411L)

@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -24,9 +25,9 @@ public class BaseEntity {
 
     @CreationTimestamp
     @Column(updatable = false)
-    private OffsetDateTime createdAt;
+    private Timestamp createdAt;
 
     @UpdateTimestamp
     @Column(updatable = false)
-    private OffsetDateTime lastUpdatedAt;
+    private Timestamp lastUpdatedAt;
 }
