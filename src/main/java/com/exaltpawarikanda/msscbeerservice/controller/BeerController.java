@@ -1,6 +1,7 @@
 package com.exaltpawarikanda.msscbeerservice.controller;
 
 import com.exaltpawarikanda.msscbeerservice.model.BeerDto;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @RestController
 public class BeerController {
 
+    @Operation(summary = "Get a beer by beer id")
     @GetMapping("/{beerId}")
     public ResponseEntity<BeerDto> getBeerById(@PathVariable("beerId")UUID beerId){
 
@@ -22,6 +24,7 @@ public class BeerController {
         return new ResponseEntity<>(BeerDto.builder().build(), HttpStatus.OK);
     }
 
+    @Operation(summary = "Create a beer")
     @PostMapping
     public ResponseEntity createBeer( @Validated @RequestBody BeerDto beerDto){
 
@@ -29,6 +32,7 @@ public class BeerController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Update a beer by beer id")
     @PutMapping("/{beerId}")
     public ResponseEntity updateBeerById(@PathVariable("beerId") UUID beerId,@Validated @RequestBody BeerDto beerDto){
 
@@ -36,6 +40,7 @@ public class BeerController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @Operation(summary = "Delete a beer by beer id")
     @DeleteMapping("/{beerId}")
     public ResponseEntity deleteBeerById(@PathVariable("beerId") UUID beerId){
 

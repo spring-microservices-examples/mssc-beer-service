@@ -1,6 +1,5 @@
 package com.exaltpawarikanda.msscbeerservice.controller;
 
-import com.exaltpawarikanda.msscbeerservice.domain.Beer;
 import com.exaltpawarikanda.msscbeerservice.enums.BeerStyle;
 import com.exaltpawarikanda.msscbeerservice.model.BeerDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
