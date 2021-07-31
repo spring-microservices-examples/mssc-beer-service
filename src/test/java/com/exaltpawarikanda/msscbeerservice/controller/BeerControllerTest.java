@@ -3,6 +3,7 @@ package com.exaltpawarikanda.msscbeerservice.controller;
 import com.exaltpawarikanda.msscbeerservice.enums.BeerStyle;
 import com.exaltpawarikanda.msscbeerservice.model.BeerDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -27,6 +28,18 @@ class BeerControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
+    BeerDto validBeerDto;
+
+    @BeforeEach
+    public void setUp(){
+        validBeerDto= BeerDto.builder()
+                .beerName("Castle")
+                .beerStyle(BeerStyle.LAGER)
+                .upc(613973343411L)
+                .price(new BigDecimal("2.99"))
+                .build();
+    }
+
     @Test
     void getBeerById() throws Exception {
         mockMvc.perform(get("/api/v1/beer/" + UUID.randomUUID().toString())
@@ -37,7 +50,7 @@ class BeerControllerTest {
     @Test
     void createBeer() throws Exception {
 
-        BeerDto beerDto = getValidBeerDto();
+        BeerDto beerDto = validBeerDto;
         String beerDtoJson = objectMapper.writeValueAsString(beerDto);
 
         mockMvc.perform(post("/api/v1/beer")
@@ -48,7 +61,7 @@ class BeerControllerTest {
 
     @Test
     void updateBeerById() throws Exception{
-        BeerDto beerDto = getValidBeerDto();
+        BeerDto beerDto = validBeerDto;
         String beerDtoJson = objectMapper.writeValueAsString(beerDto);
         mockMvc.perform(put("/api/v1/beer/" + UUID.randomUUID().toString())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -63,12 +76,5 @@ class BeerControllerTest {
                 .andExpect(status().isNoContent());
     }
 
-    BeerDto getValidBeerDto(){
-        return BeerDto.builder()
-                .beerName("Castle")
-                .beerStyle(BeerStyle.LAGER)
-                .upc(613973343411L)
-                .price(new BigDecimal("2.99"))
-                .build();
-    }
+
 }
