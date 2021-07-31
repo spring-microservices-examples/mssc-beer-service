@@ -23,14 +23,14 @@ import java.util.UUID;
 @Data
 public class BeerDto {
 
-    @Null
+ /*   @Null
     private UUID id;
     @Null
     private Long version;
     @Null
     private OffsetDateTime createdAt;
     @Null
-    private OffsetDateTime lastUpdatedAt;
+    private OffsetDateTime lastUpdatedAt;*/
 
     @NotBlank
     private String beerName;
