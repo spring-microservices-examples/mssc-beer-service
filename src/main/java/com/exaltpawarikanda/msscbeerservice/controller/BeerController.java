@@ -28,9 +28,9 @@ public class BeerController {
     }
 
     @Operation(summary = "Create a beer")
-    @PostMapping(value = "{id}")
+    @PostMapping
     public ApiResponse<?> createBeer( @Validated @RequestBody BeerDto beerDto){
-        return new ApiResponse<>(ApiConstants.StatusCodes.CREATED, ApiConstants.Messages.CREATED,beerService.createBeer(beerDto));
+        return new ApiResponse<>(ApiConstants.StatusCodes.SUCCESS, ApiConstants.Messages.CREATED,beerService.createBeer(beerDto));
     }
 
     @Operation(summary = "Update a beer by beer id")
