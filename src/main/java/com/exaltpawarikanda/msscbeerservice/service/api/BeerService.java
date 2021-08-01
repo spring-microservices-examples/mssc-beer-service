@@ -1,6 +1,9 @@
 package com.exaltpawarikanda.msscbeerservice.service.api;
 
+import com.exaltpawarikanda.msscbeerservice.enums.BeerStyle;
 import com.exaltpawarikanda.msscbeerservice.model.BeerDto;
+import com.exaltpawarikanda.msscbeerservice.model.BeerPagedList;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.UUID;
 
@@ -15,4 +18,6 @@ public interface BeerService {
     BeerDto updateBeerById(UUID beerId, BeerDto beerDto);
 
     BeerDto deleteBeerById(UUID beerId);
+
+    BeerPagedList listBeers(String beerName, BeerStyle beerStyle, PageRequest pageRequest);
 }
