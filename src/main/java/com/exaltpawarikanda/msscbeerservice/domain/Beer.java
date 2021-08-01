@@ -33,6 +33,7 @@ public class Beer extends BaseEntity{
     }
 
 
+    @Column(name = "beerName")
     private String beerName;
     private String beerStyle;
 
