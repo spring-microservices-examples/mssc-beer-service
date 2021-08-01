@@ -14,29 +14,24 @@ import java.util.UUID;
 /**
  * Created by Exalt Pawarikanda on 7/27/21
  */
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
-public class Beer{
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID",strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(length = 36,columnDefinition = "varchar",updatable = false,nullable = false)
-    private UUID id;
+public class Beer extends BaseEntity{
 
-    @Version
-    private Long version;
+    @Builder
+    public Beer(UUID id, Long version, Timestamp createdAt, Timestamp lastUpdatedAt, String beerName, String beerStyle, String upc, BigDecimal price, Integer quantityOnHand, Integer minOnHand, Integer quantityToBrew, String status) {
+        super(id, version, createdAt, lastUpdatedAt);
+        this.beerName = beerName;
+        this.beerStyle = beerStyle;
+        this.upc = upc;
+        this.price = price;
+        this.quantityOnHand = quantityOnHand;
+        this.minOnHand = minOnHand;
+        this.quantityToBrew = quantityToBrew;
+        this.status = status;
+    }
 
-    @CreationTimestamp
-    @Column(updatable = false)
-    private Timestamp createdAt;
-
-    @UpdateTimestamp
-    @Column(updatable = false)
-    private Timestamp lastUpdatedAt;
 
     private String beerName;
     private String beerStyle;

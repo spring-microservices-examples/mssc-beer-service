@@ -1,5 +1,6 @@
 package com.exaltpawarikanda.msscbeerservice.model;
 
+import com.exaltpawarikanda.msscbeerservice.model.BeerDto;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
