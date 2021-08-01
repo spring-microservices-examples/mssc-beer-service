@@ -29,29 +29,29 @@ public class BeerServiceImpl implements BeerService {
     private final BeerRepository beerRepository;
     private final BeerMapper beerMapper;
 
-    @Cacheable(cacheNames = "beerListCache",condition = "#showInventoryOnHand==false")
+    @Cacheable(cacheNames = "beerListCache", condition = "#showInventoryOnHand==false")
     @Override
     public BeerPagedList listBeers(String beerName, BeerStyle beerStyle, PageRequest pageRequest, Boolean showInventoryOnHand) {
 
         System.out.println("I was called");
 
-       BeerPagedList beerPagedList;
+        BeerPagedList beerPagedList;
         Page<Beer> beerPage;
 
-        if(!StringUtils.isEmpty(beerName) && !StringUtils.isEmpty(beerStyle)){
+        if (!StringUtils.isEmpty(beerName) && !StringUtils.isEmpty(beerStyle)) {
             //search both
-            beerPage = beerRepository.findAllByBeerNameAndBeerStyle(beerName,beerStyle,pageRequest);
-        }else if(!StringUtils.isEmpty(beerName) && StringUtils.isEmpty(beerStyle)){
+            beerPage = beerRepository.findAllByBeerNameAndBeerStyle(beerName, beerStyle, pageRequest);
+        } else if (!StringUtils.isEmpty(beerName) && StringUtils.isEmpty(beerStyle)) {
             //search by beer name
-            beerPage = beerRepository.findAllByBeerName(beerName,pageRequest);
-        }else if(StringUtils.isEmpty(beerName) && !StringUtils.isEmpty(beerStyle)){
+            beerPage = beerRepository.findAllByBeerName(beerName, pageRequest);
+        } else if (StringUtils.isEmpty(beerName) && !StringUtils.isEmpty(beerStyle)) {
             //search by beer style
-            beerPage = beerRepository.findAllByBeerStyle(beerStyle,pageRequest);
-        }else{
+            beerPage = beerRepository.findAllByBeerStyle(beerStyle, pageRequest);
+        } else {
             beerPage = beerRepository.findAll(pageRequest);
         }
 
-        if(showInventoryOnHand){
+        if (showInventoryOnHand) {
             beerPagedList = new BeerPagedList(beerPage
                     .getContent()
                     .stream()
@@ -62,7 +62,7 @@ public class BeerServiceImpl implements BeerService {
                                     beerPage.getPageable().getPageSize()),
                     beerPage.getTotalElements());
 
-        }else{
+        } else {
             beerPagedList = new BeerPagedList(beerPage
                     .getContent()
                     .stream()
@@ -79,17 +79,17 @@ public class BeerServiceImpl implements BeerService {
         return beerPagedList;
     }
 
-    @Cacheable(cacheNames = "beerCache",key = "#beerId",condition = "#showInventoryOnHand==false")
+    @Cacheable(cacheNames = "beerCache", key = "#beerId", condition = "#showInventoryOnHand==false")
     @Override
     public BeerDto getBeerById(UUID beerId, Boolean showInventoryOnHand) {
         System.out.println("I was called");
 
-        if(showInventoryOnHand) {
-           return beerMapper.beerToBeerDtoWithInventory(
+        if (showInventoryOnHand) {
+            return beerMapper.beerToBeerDtoWithInventory(
                     beerRepository.findById(beerId)
                             .orElseThrow(NotFoundException::new));
-        }else{
-           return beerMapper.beerToBeerDto(
+        } else {
+            return beerMapper.beerToBeerDto(
                     beerRepository.findById(beerId)
                             .orElseThrow(NotFoundException::new));
         }
@@ -123,5 +123,9 @@ public class BeerServiceImpl implements BeerService {
         return beerMapper.beerToBeerDto(beerRepository.save(beer));
     }
 
-
+    @Cacheable(cacheNames = "beerUpcCache")
+    @Override
+    public BeerDto getBeerByUpc(String upc) {
+        return beerMapper.beerToBeerDto(beerRepository.findByUpc(upc));
+    }
 }

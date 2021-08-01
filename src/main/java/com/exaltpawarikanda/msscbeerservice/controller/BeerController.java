@@ -18,7 +18,7 @@ import java.util.UUID;
  * Created by Exalt Pawarikanda on 7/26/21
  */
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/beer")
+@RequestMapping("/api/v1/")
 @RestController
 public class BeerController {
 
@@ -27,7 +27,7 @@ public class BeerController {
     private final BeerService beerService;
 
     @Operation(summary = "Get all beers")
-    @GetMapping(produces = "application/json")
+    @GetMapping(path ="beer" ,produces = "application/json")
     public ApiResponse<BeerPagedList> listBeers(
             @RequestParam(value = "pageNumber",required = false)Integer pageNumber,
             @RequestParam(value = "pageSize",required = false)Integer pageSize,
@@ -51,7 +51,7 @@ public class BeerController {
     }
 
     @Operation(summary = "Get a beer by beer id")
-    @GetMapping("/{beerId}")
+    @GetMapping("beer/{beerId}")
     public ApiResponse<BeerDto> getBeerById(@PathVariable("beerId")UUID beerId,
                                             @RequestParam(value = "showInventoryOnHand",required = false) Boolean showInventoryOnHand){
 
@@ -61,6 +61,12 @@ public class BeerController {
         return new ApiResponse<>(ApiConstants.StatusCodes.SUCCESS, ApiConstants.Messages.OK,beerService.getBeerById(beerId,showInventoryOnHand));
     }
 
+    @Operation(summary = "Get a beer by beer upc")
+    @GetMapping("beerUpc/{upc}")
+    public ApiResponse<BeerDto> getBeerByUpc(@PathVariable("upc")String upc){
+        return new ApiResponse<>(ApiConstants.StatusCodes.SUCCESS, ApiConstants.Messages.OK,beerService.getBeerByUpc(upc));
+    }
+
     @Operation(summary = "Create a beer")
     @PostMapping
     public ApiResponse<?> createBeer( @Validated @RequestBody BeerDto beerDto){
@@ -68,13 +74,13 @@ public class BeerController {
     }
 
     @Operation(summary = "Update a beer by beer id")
-    @PutMapping("/{beerId}")
+    @PutMapping("beer/{beerId}")
     public ApiResponse<?> updateBeerById(@PathVariable("beerId") UUID beerId,@Validated @RequestBody BeerDto beerDto){
         return new ApiResponse<>(ApiConstants.StatusCodes.SUCCESS, ApiConstants.Messages.OK,beerService.updateBeerById(beerId,beerDto));
     }
 
     @Operation(summary = "Delete a beer by beer id")
-    @DeleteMapping("/{beerId}")
+    @DeleteMapping("beer/{beerId}")
     public ApiResponse<?> deleteBeerById(@PathVariable("beerId") UUID beerId){
         return new ApiResponse<>(ApiConstants.StatusCodes.SUCCESS, ApiConstants.Messages.OK,beerService.deleteBeerById(beerId));
     }
