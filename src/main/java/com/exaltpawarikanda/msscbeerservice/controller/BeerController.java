@@ -32,7 +32,12 @@ public class BeerController {
             @RequestParam(value = "pageNumber",required = false)Integer pageNumber,
             @RequestParam(value = "pageSize",required = false)Integer pageSize,
             @RequestParam(value = "beerName",required = false)String beerName,
-            @RequestParam(value = "beerStyle",required = false) BeerStyle beerStyle){
+            @RequestParam(value = "beerStyle",required = false) BeerStyle beerStyle,
+            @RequestParam(value = "showInventoryOnHand",required = false) Boolean showInventoryOnHand){
+
+        if(showInventoryOnHand == null ){
+            showInventoryOnHand =  false;
+        }
 
         if(pageNumber == null || pageNumber < 0){
            pageNumber =  DEFAULT_PAGE_NUMBER;
@@ -42,13 +47,18 @@ public class BeerController {
             pageSize =  DEFAULT_PAGE_SIZE;
         }
 
-        return new ApiResponse<>(ApiConstants.StatusCodes.SUCCESS, ApiConstants.Messages.OK,beerService.listBeers(beerName,beerStyle, PageRequest.of(pageNumber,pageSize)));
+        return new ApiResponse<>(ApiConstants.StatusCodes.SUCCESS, ApiConstants.Messages.OK,beerService.listBeers(beerName,beerStyle, PageRequest.of(pageNumber,pageSize),showInventoryOnHand));
     }
 
     @Operation(summary = "Get a beer by beer id")
     @GetMapping("/{beerId}")
-    public ApiResponse<BeerDto> getBeerById(@PathVariable("beerId")UUID beerId){
-        return new ApiResponse<>(ApiConstants.StatusCodes.SUCCESS, ApiConstants.Messages.OK,beerService.getBeerById(beerId));
+    public ApiResponse<BeerDto> getBeerById(@PathVariable("beerId")UUID beerId,
+                                            @RequestParam(value = "showInventoryOnHand",required = false) Boolean showInventoryOnHand){
+
+        if(showInventoryOnHand == null ){
+            showInventoryOnHand =  false;
+        }
+        return new ApiResponse<>(ApiConstants.StatusCodes.SUCCESS, ApiConstants.Messages.OK,beerService.getBeerById(beerId,showInventoryOnHand));
     }
 
     @Operation(summary = "Create a beer")
