@@ -48,7 +48,7 @@ public class BeerDto implements Serializable {
     @NotBlank
     private String beerName;
 
-    @JsonProperty("beer-style")
+   // @JsonProperty("beer-style")
     @NotNull
     private BeerStyle beerStyle;
 

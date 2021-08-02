@@ -9,6 +9,8 @@ import com.exaltpawarikanda.msscbeerservice.util.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,8 +65,8 @@ public class BeerController {
 
     @Operation(summary = "Get a beer by beer upc")
     @GetMapping("beerUpc/{upc}")
-    public ApiResponse<BeerDto> getBeerByUpc(@PathVariable("upc")String upc){
-        return new ApiResponse<>(ApiConstants.StatusCodes.SUCCESS, ApiConstants.Messages.OK,beerService.getBeerByUpc(upc));
+    public ResponseEntity<BeerDto> getBeerByUpc(@PathVariable("upc")String upc){
+        return new ResponseEntity<>(beerService.getBeerByUpc(upc), HttpStatus.OK);
     }
 
     @Operation(summary = "Create a beer")
